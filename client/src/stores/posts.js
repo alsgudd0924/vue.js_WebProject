@@ -7,7 +7,7 @@ export const usePostsStore = defineStore('posts', () => {
   const comments = ref([])
   const loading = ref(false)
 
-  const API = 'http://localhost:3000/api'
+  const API = 'https://vuejswebproject-production.up.railway.app/api'
 
   async function fetchPosts() {
     loading.value = true
