@@ -4,6 +4,10 @@ const path = require('path')
 const db = new Database(path.join(__dirname, 'board.db'))
 
 db.exec(`
+  DROP TABLE IF EXISTS comments;
+  DROP TABLE IF EXISTS posts;
+  DROP TABLE IF EXISTS users;
+
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
