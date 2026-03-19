@@ -1,23 +1,15 @@
 <template>
   <div class="write-container">
     <h1>글쓰기</h1>
-
     <div class="form">
-      <div class="field">
-        <label>작성자</label>
-        <input v-model="author" type="text" placeholder="이름을 입력하세요" />
-      </div>
-
       <div class="field">
         <label>제목</label>
         <input v-model="title" type="text" placeholder="제목을 입력하세요" />
       </div>
-
       <div class="field">
         <label>내용</label>
         <textarea v-model="content" placeholder="내용을 입력하세요" rows="12" />
       </div>
-
       <div class="actions">
         <router-link to="/" class="cancel-btn">취소</router-link>
         <button @click="submit" class="submit-btn" :disabled="loading">
@@ -35,23 +27,14 @@ import { usePostsStore } from '../stores/posts'
 
 const router = useRouter()
 const store = usePostsStore()
-
 const title = ref('')
 const content = ref('')
-const author = ref('')
 const loading = ref(false)
 
 async function submit() {
-  if (!title.value.trim() || !content.value.trim() || !author.value.trim()) {
-    alert('모든 항목을 입력해주세요!')
-    return
-  }
+  if (!title.value.trim() || !content.value.trim()) return alert('제목과 내용을 입력해주세요!')
   loading.value = true
-  const result = await store.createPost({
-    title: title.value,
-    content: content.value,
-    author: author.value
-  })
+  const result = await store.createPost({ title: title.value, content: content.value })
   loading.value = false
   router.push(`/post/${result.id}`)
 }
@@ -101,15 +84,12 @@ input:focus, textarea:focus {
   border-color: #58a6ff;
 }
 
-textarea {
-  resize: vertical;
-}
+textarea { resize: vertical; }
 
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  margin-top: 0.5rem;
 }
 
 .cancel-btn {
@@ -119,11 +99,6 @@ textarea {
   color: #8b949e;
   text-decoration: none;
   font-size: 0.9rem;
-  transition: border-color 0.2s;
-}
-
-.cancel-btn:hover {
-  border-color: #8b949e;
 }
 
 .submit-btn {
@@ -134,11 +109,6 @@ textarea {
   color: #fff;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s;
-}
-
-.submit-btn:hover:not(:disabled) {
-  background: #2ea043;
 }
 
 .submit-btn:disabled {
